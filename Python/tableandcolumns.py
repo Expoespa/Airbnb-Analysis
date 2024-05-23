@@ -15,8 +15,8 @@ db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
 
 # Ruta al archivo .csv
-csv_file_path = 'Data/water.csv'
-table_name = 'waterpapi'
+csv_file_path = 'Data/airbnb.csv'
+table_name = 'airbnb'
 
 # Leer el archivo .csv
 df = pd.read_csv(csv_file_path)

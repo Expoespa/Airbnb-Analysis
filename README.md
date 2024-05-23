@@ -1,140 +1,79 @@
-# Guide to Setting Up PostgreSQL with Docker
+# Airbnb Data Analysis Project
 
-This document describes how to configure, stop, start, and access a PostgreSQL database using Docker. It includes detailed step-by-step instructions and command examples.
+This project uses Docker to create a PostgreSQL database environment to analyze an Airbnb dataset. The project includes loading data from a CSV file into the database and running SQL queries to answer specific questions.
 
-### Prerequisites
+## Project Structure
 
-Before starting, make sure you have Docker installed on your system. If you don't have it installed, follow the instructions on [Docker's official page](https://docs.docker.com/get-docker/).
+- `tableandcolumns.py`: Python script to load data from a CSV file into a PostgreSQL database and display the table structure.
+- `airbnb.csv`: CSV file containing Airbnb listings data.
+- `airbnb-queries.sql`: SQL file containing 20 queries to analyze the data.
+- `.env`: Environment file storing database credentials.
 
-### Useful Commands
+## Requirements
 
-**Start containers**
+- Docker
+- Python 3
+- PostgreSQL
+- Python libraries: `pandas`, `sqlalchemy`, `dotenv`
 
+## Setup
 
-```
-docker start <name_of_container>
-```
+1. Clone the repository:
 
+    ```bash
+    git clone https://github.com/your-username/airbnb-analysis.git
+    cd airbnb-analysis
+    ```
 
-**Stop containers**
+2. Create and configure the Docker container with PostgreSQL:
 
+    ```bash
+    docker run --name airbnb-postgres -e POSTGRES_PASSWORD=yourpassword -d -p 5432:5432 postgres
+    ```
 
-```
-docker stop <name_of_container>
-```
+3. Configure the `.env` file with your database credentials:
 
+    ```plaintext
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_NAME=airbnb
+    DB_USER=youruser
+    DB_PASSWORD=yourpassword
+    ```
 
+## Usage
 
-**Remove containers**
+1. Run the `tableandcolumns.py` script to load the data into the database:
 
+    ```bash
+    python tableandcolumns.py
+    ```
 
+    This script will:
+    - Load data from the `airbnb.csv` file into a PostgreSQL table called `airbnb_listings`.
+    - Display the column names of the table.
 
-```
-docker rm <name_of_container>
-```
+2. Execute the SQL queries in the `airbnb-queries.sql` file to analyze the data:
 
+    Connect to the PostgreSQL database and run the queries:
 
-**List Containers**
+    ```bash
+    psql -h localhost -U youruser -d airbnb -f airbnb-queries.sql
+    ```
 
+## SQL Queries
 
+The `airbnb-queries.sql` file contains 20 SQL queries to analyze the Airbnb data. Some of the included queries are:
 
-```
-docker ps -a
-```
+- Count the total number of listings.
+- Count the number of listings by neighborhood.
 
-**Get container IP**
+Add your own queries for more detailed analysis.
 
+## Contributions
 
-```
-docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <name_of_container>
+Contributions are welcome. Please open an issue or a pull request to discuss any changes you would like to make.
 
-```
+## License
 
-
-## Step 1: Download the PostgreSQL Image
-
-To **download** the PostgreSQL image, open your terminal and run the following command:
-
-
-```
-docker pull postgres
-```
-
-
-## Step 2: Create the PostgreSQL Container
-
-To **create** a PostgreSQL container, open your terminal and run the following command:
-
---name: Enter a custom name for your container
--e: This flag is used to define environment variables that will be passed to the container.
--p: Expose PostgreSQL port 5400 to the outside so it can be used by other applications like PgAdmin.
--d: This flag tells Docker to run the container in the background.
-
-
-```
-docker run --name borges-postgres -e POSTGRES_USER=borges -e POSTGRES_PASSWORD=password -e POSTGRES_DB=borgesdb -p 5400:5432 -d postgres
-```
-
-
-![alt text](image.png)
-
-## Step 3: Run the PostgreSQL Container
-
-To **run** a PostgreSQL container, open your terminal and run the following command:
-This command allows us to connect to the PostgreSQL CLI running inside the Docker container.
-
--i: Provide an interactive session
--t: Allocate a terminal for the session
-
-
-
-```
-docker exec -it borges-postgres bash
-```
-![alt text](image-1.png)
-
-## Step 4: Connect to PostgreSQL
-
-Once inside the terminal, we can connect to PostgreSQL by running the following command:
-- h: Hostname
-- U: Username  
-
-
-
-```
-psql -h localhost -U borges borgesdb
-
-```
-![alt text](image-2.png)
-
-We can also connect using the container's IP and specifying the port:
-
-```
-psql -h <container_ip> -p <container_port> -U <username> <database>
-
-```
-![alt text](image-3.png)
-
-## Step 5: Verify We Can See Databases in PostgreSQL
-
-Now we will verify that we can execute SQL lines using the \l command to see all databases.
-
-![alt text](image-4.png)
-
-## Step 6: Verify We Can Connect Using Database Managers
-
-Open pgAdmin 4 and try to register a new server using the exposed port 5400:
-![alt text](image-5.png)
-![alt text](image-6.png)
-
-## Step 7: Import Data into the PostgreSQL Database ##
-
-### Python Script to Import Data
-
-The following Python script facilitates the insertion of columns and data into a PostgreSQL table. It reads data from a CSV file, cleans the column names, converts data types, generates a table schema, creates the table in PostgreSQL, and inserts the data.
-
-### Environment Variables
-
-Make sure to create a .env file in the same directory as your script with the following content:
-
-By following these steps, you can easily set up PostgreSQL using Docker and import data from a CSV file into your PostgreSQL database.
+This project is licensed under the MIT License.
