@@ -74,6 +74,3 @@ Add your own queries for more detailed analysis.
 
 Contributions are welcome. Please open an issue or a pull request to discuss any changes you would like to make.
 
-## License
-
-This project is licensed under the MIT License.
