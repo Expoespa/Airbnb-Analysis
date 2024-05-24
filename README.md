@@ -1,6 +1,6 @@
 # Airbnb Data Analysis Project
 
-This project uses Docker to create a PostgreSQL database environment to analyze an Airbnb dataset. The project includes loading data from a CSV file into the database and running SQL queries to answer specific questions.
+This project uses Docker to create a PostgreSQL database environment to analyze an Airbnb dataset. The project includes loading data from a CSV file into the database and running SQL queries to answer specific questions and a Python script that create the tables and columns with their respective data types  automatically. Then the same script load the data from a CSV file into the database.
 
 ## Project Structure
 
